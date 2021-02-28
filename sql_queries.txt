@@ -1,0 +1,48 @@
+
+!!! ВНИМАНИЕ !!!
+
+  Выполнить запросы по порядку
+
+# СОЗДАНИЕ БАЗЫ ДАННЫХ
+1) CREATE DATABASE piter CHARACTER SET utf8 COLLATE 'utf8_general_ci';
+
+1.5) USE 'piter';
+
+# Создание таблицы пользователей
+2) CREATE TABLE `users` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` VARCHAR(255) NOT NULL, `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP) DEFAULT CHARACTER SET utf8 COLLATE 'utf8_general_ci';
+
+3) ALTER TABLE `users` ADD UNIQUE `users_name_unique`(`name`);
+
+# Создание таблицы постов
+
+4) CREATE TABLE `posts` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` INT UNSIGNED NOT NULL, `title` VARCHAR(255) NOT NULL, `body` TEXT NOT NULL, `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP) DEFAULT CHARACTER SET utf8 COLLATE 'utf8_general_ci';
+
+5) ALTER TABLE `posts` ADD CONSTRAINT `posts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+6) ALTER TABLE `posts` ADD INDEX `posts_user_id_index`(`user_id`);
+
+
+# Создание таблицы комментарием 
+
+7) CREATE TABLE `comments` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, `post_id` INT UNSIGNED NOT NULL, `name` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL, `body` TEXT NOT NULL, `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP) DEFAULT CHARACTER SET utf8 COLLATE 'utf8_general_ci';
+
+8) ALTER TABLE `comments` ADD CONSTRAINT `comments_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`);
+
+9) ALTER TABLE `comments` ADD INDEX `comments_post_id_index`(`post_id`);
+
+
+=============================================================================================================
+
+  ЛИБО ВСЕ РАЗОМ
+
+
+CREATE DATABASE piter CHARACTER SET utf8 COLLATE 'utf8_general_ci';
+USE 'piter';
+CREATE TABLE `users` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` VARCHAR(255) NOT NULL, `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP) DEFAULT CHARACTER SET utf8 COLLATE 'utf8_general_ci';
+ALTER TABLE `users` ADD UNIQUE `users_name_unique`(`name`);
+CREATE TABLE `posts` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, `user_id` INT UNSIGNED NOT NULL, `title` VARCHAR(255) NOT NULL, `body` TEXT NOT NULL, `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP) DEFAULT CHARACTER SET utf8 COLLATE 'utf8_general_ci';
+ALTER TABLE `posts` ADD CONSTRAINT `posts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `posts` ADD INDEX `posts_user_id_index`(`user_id`);
+CREATE TABLE `comments` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, `post_id` INT UNSIGNED NOT NULL, `name` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL, `body` TEXT NOT NULL, `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP) DEFAULT CHARACTER SET utf8 COLLATE 'utf8_general_ci';
+ALTER TABLE `comments` ADD CONSTRAINT `comments_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`);
+ALTER TABLE `comments` ADD INDEX `comments_post_id_index`(`post_id`);
